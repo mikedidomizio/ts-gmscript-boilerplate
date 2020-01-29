@@ -50,14 +50,6 @@ example:
 })();
 ```
 
-*or*
-
-Install one of the pre-made scripts below, note: it is best to review what you are **install**ing
-
-[点击从Github安装](https://github.com/axetroy/ts-gmscript-boilerplate/raw/gh-pages/ts-gmscript-boilerplate.min.user.js)
-
-[点击从GreasyFork安装](https://greasyfork.org/scripts/11915-ts-gmscript-boilerplate-typescript/code/ts-gmscript-boilerplate%20(typescript).user.js)
-
 ## Getting started in development (贡献代码)
 
 ```bash
@@ -69,13 +61,18 @@ npm install
 npm run start
 ```
 
-Typescript will compile on code change and generate Javascript in the `dist/` directory.  Copy and paste the generated file `dist/index.user.js` to your browser extension.
+Typescript will compile on code change and generate Javascript in the `dist/` directory.
 
 ## Automatically reloading the generated script for quick development
 
 [Tampermonkey (Chrome)](https://stackoverflow.com/a/55568568)
 1.  in Chrome, enable "Allow access to file URLs"
-2.  Add this to the `webpack.config.js` -> `// @require file:///path/to/userscript.user.js`
+2.  Add this to the to the metadata `// @require file:///path/to/index.user.js`
+
+## Using the script directly
+
+You can copy the `./dist/index.user.js` or the `./dist/index.min.user.js` into your browser extension.
+By doing this though, you lose the ability to develop with automatically refreshing the page.
 
 ## Open source license (开源许可)
 

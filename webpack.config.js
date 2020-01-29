@@ -14,77 +14,44 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 // webpack.config.js
 module.exports = (env, argv) => {
-    const config = {
-        entry: {
-            "index": path.join(__dirname, 'index.ts'),
-            "index.min": path.join(__dirname, 'index.ts')
-        },
-        output: {
-            path: path.join(__dirname, '/dist'),
-            filename: '[name].user.js'
-        },
-        resolve: {
-            modules: ['node_modules'],
-            extensions: ['.coffee', '.js', '.ts']
-        },
-        optimization: {
-            minimize: false // update this to true or false depending on `development` or `production`
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.tsx?$/, use: 'ts-loader'
-                }
-            ]
-        },
-        plugins: [
-            // tampermonkey prefers dot notation
-            new ReplaceInFileWebpackPlugin([{
-                dir: 'dist',
-                test: /index(\.min)?\.user\.js/,
-                rules: [{
-                    search: /return\smodule\['default']/,
-                    replace: 'return module.default'
-                }]
-            }]),
-            new webpack.LoaderOptionsPlugin({
-                minimize: true,
-                debug: false
-            }),
-            new webpack.BannerPlugin({
-                banner: `// ==UserScript==
+  const config = {
+    entry: {
+      "index": path.join(__dirname, 'src/index.ts'),
+      "index.min": path.join(__dirname, 'src/index.ts')
+    },
+    output: {
+      path: path.join(__dirname, '/dist'),
+      filename: '[name].user.js'
+    },
+    resolve: {
+      modules: ['node_modules'],
+      extensions: ['.coffee', '.js', '.ts']
+    },
+    optimization: {
+      minimize: false // update this to true or false depending on `development` or `production`
+    },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/, use: 'ts-loader'
+        }
+      ]
+    },
+    plugins: [
+      new webpack.LoaderOptionsPlugin({
+        minimize: true,
+        debug: false
+      }),
+      new webpack.BannerPlugin({
+        banner: `// ==UserScript==
 // @name              ${pkg.name} (typescript)
 // @author            ${pkg.author}
 // @collaborator      ${pkg.author}
 // @description       ${pkg.description}
 // @version           ${pkg.version}
 // @update            ${moment().format('YYYY-MM-DD HH:mm:ss')}
-// @grant             GM_xmlhttpRequest
-// @include           *www.baidu.com*
-// @include           *tieba.baidu.com*
-// @include           *v.baidu.com*
-// @include           *www.google.*
-// @include           *encrypted.google.com*
-// @include           *www.so.com*
-// @include           *www.zhihu.com*
-// @include           *daily.zhihu.com*
-// @include           *zhuanlan.zhihu.com*
-// @include           *weibo.com*
-// @include           *twitter.com*
-// @include           *www.sogou.com*
-// @connect           *
-// @compatible        chrome  完美运行
-// @compatible        firefox  完美运行
-// @supportURL        http://www.burningall.com
-// @run-at            document-start
-// @contributionURL   troy450409405@gmail.com|alipay.com
-// @downloadURL       https://github.com/axetroy/anti-redirect/raw/master/dist/anti-redirect.min.user.js
-// @namespace         https://greasyfork.org/zh-CN/users/3400-axetroy
-// @license           The MIT License (MIT); http://opensource.org/licenses/MIT
+// @match             *
 // ==/UserScript==
-
-// Github源码:https://github.com/axetroy/anti-redirect
-
 `, entryOnly: true, raw: true
             }),
             new BundleAnalyzerPlugin({
